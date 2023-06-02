@@ -41,7 +41,7 @@ public class UserService {
 
     public User update(long id, User user) {
         User userUpdate = getUser(id);
-        userUpdate.setNom(user.getNom());
+        userUpdate.setName(user.getName());
         userUpdate.setTelephone(user.getTelephone());
         userRepository.save(userUpdate);
         logger.info("L'utilisateur d'id " + userUpdate.getId() + " a été mis à jour");
@@ -58,8 +58,8 @@ public class UserService {
 
     public User partialUpdate(long id, User user) {
         User partialUpdateUser = getUser(id);
-        if (user.getNom() != null) {
-            partialUpdateUser.setNom(user.getNom());
+        if (user.getName() != null) {
+            partialUpdateUser.setName(user.getName());
         }
         if (user.getTelephone() != 0) {
             partialUpdateUser.setTelephone(user.getTelephone());

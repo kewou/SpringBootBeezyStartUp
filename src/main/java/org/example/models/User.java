@@ -21,7 +21,7 @@ public class User {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    private String nom;
+    private String name;
 
     @NotBlank(message = "L'adresse email ne peut etre vide")
     @Email(message = "Entrer une adresse email valide")

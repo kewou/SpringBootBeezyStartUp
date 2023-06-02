@@ -32,22 +32,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable() // protocole de sécurité qui gère un token
                 .authorizeRequests()
+                .antMatchers("/logout").authenticated()
                 .antMatchers("/").permitAll() // Tout le monde a accès à cette page
-                .antMatchers("/home").hasAuthority("ADMIN")
+                //.antMatchers("/home").hasAnyAuthority("LOCATAIRE,ADMIN")
                 .antMatchers("/admin").hasAuthority("ADMIN")
                 .antMatchers("/proprio").hasAuthority("PROPRIO")
                 .antMatchers("/locataire").hasAuthority("LOCATAIRE")
                 .anyRequest().authenticated()    // toutes les requetes doivent etre authentifiées
-                .and().httpBasic();
+                .and()
+                .httpBasic()
+                .and()
+                .logout()
+                .logoutUrl("/logout") // Spécifiez l'URL de déconnexion
+                .logoutSuccessUrl("/login") // Redirigez vers une page de connexion après la déconnexion
+                .invalidateHttpSession(true) // Invalidez la session HTTP après la déconnexion
+                .deleteCookies("JSESSIONID");
+        ;
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/configuration/ui", "/swagger-resources", "/configuration/ui",
                         "/swagger-resources/**", "/configuration/security", "/api-docs/swagger-config", "/swagger-ui/**", "/webjars/**")
-                .antMatchers("/users")
                 .antMatchers("/users/*")
-                .antMatchers("/users/add")
                 .antMatchers("/api-docs")
                 .antMatchers("/actuator");
     }

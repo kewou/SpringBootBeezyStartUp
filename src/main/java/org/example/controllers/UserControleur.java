@@ -78,5 +78,11 @@ public class UserControleur {
         return userService.getUser(id).getLogements();
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        // Implémentez ici la logique de déconnexion si nécessaire
+        return "redirect:/login"; // Redirigez vers une page de connexion après la déconnexion
+    }
+
 
 }
